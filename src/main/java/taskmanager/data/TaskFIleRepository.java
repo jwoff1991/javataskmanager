@@ -35,22 +35,53 @@ public class TaskFIleRepository implements TaskRepository {
     }
 
     @Override
-    public Task findById(int taskId) {
+    public Task findById(int taskId) throws DataAccessException {
+        List<Task> all = findAll();
+        for (Task task : all) {
+            if (task.getId() == taskId) {
+                return task;
+            }
+        }
         return null;
     }
 
     @Override
-    public Task create(Task task) {
-        return null;
+    public Task create(Task task) throws DataAccessException {
+        List<Task> all = findAll();
+
+        int nextId = getNextId(all);
+
+        task.setId(nextId);
+        all.add(task);
+        writeToFIle(all);
+
+        return task;
     }
 
     @Override
-    public boolean update(Task task) {
+    public boolean update(Task task) throws DataAccessException {
+        List<Task> all = findAll();
+        for(int i = 0; i < all.size(); i++) {
+            if(all.get(i).getId() == task.getId()) {
+                all.set(i, task);
+                writeToFIle(all);
+                return true;
+            }
+        }
+
         return false;
     }
 
     @Override
-    public boolean delete(int taskId) {
+    public boolean delete(int taskId) throws DataAccessException {
+        List<Task> all = findAll();
+        for(int i = 0; i < all.size(); i++) {
+            if(all.get(i).getId() == taskId) {
+                all.remove(i);
+                writeToFIle(all);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -118,6 +149,6 @@ public class TaskFIleRepository implements TaskRepository {
                 maxId = task.getId();
             }
         }
-        return maxId++;
+        return maxId += 1;
     }
 }
