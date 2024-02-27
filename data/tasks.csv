@@ -1,0 +1,6 @@
+id, createdOn,title,description,dueDate,status
+1,2024-2-20,Review Curriculum, check content for spelling and grammar, 2024-2-21,TODO
+2,2024-2-21,Water Plants,water the indoor house plants,2024-2-22,COMPLETE
+3,2024-2-24,Walk Dog,take jack out for long walk on lake,2024-2-25,COMPLETE
+4,2024-2-28,Grocery Shopping, finishing weekly shopping,2024-2-28,COMPLETE
+5,2024-2-28,Vacation Planning,plan vacation to italy,2024-3-25,IN_PROGRESS
