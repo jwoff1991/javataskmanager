@@ -3,8 +3,8 @@ package taskmanager.data;
 import taskmanager.models.Status;
 import taskmanager.models.Task;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskFIleRepository implements TaskRepository {
@@ -18,8 +18,20 @@ public class TaskFIleRepository implements TaskRepository {
     }
 
     @Override
-    public List<Task> findAll() {
-        return null;
+    public List<Task> findAll() throws DataAccessException {
+        List<Task> result = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.readLine();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                Task task = lineToTask(line);
+                result.add(task);
+            }
+        } catch (FileNotFoundException ex) {
+
+        } catch(IOException ex) {
+            throw new DataAccessException("Could not open file path " + filePath);
+        }
+        return result;
     }
 
     @Override
@@ -99,4 +111,13 @@ public class TaskFIleRepository implements TaskRepository {
     }
 
     //get next id
+    private int getNextId(List<Task> tasks) {
+        int maxId = 0;
+        for (Task task : tasks) {
+            if(maxId < task.getId()) {
+                maxId = task.getId();
+            }
+        }
+        return maxId++;
+    }
 }
