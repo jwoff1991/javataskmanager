@@ -35,11 +35,11 @@ public class TaskService {
             result.addMessage("title must exist and cant be longer than 50 chars");
             return result;
         }
-        if(task.getDescription().isBlank() | task.getDescription().length() < 20 | task.getDescription() == null) {
+        if(task.getDescription() == null | task.getDescription().isBlank() | task.getDescription().length() < 20) {
             result.addMessage("Desc must not be empty and longer than 20 chars");
             return result;
         }
-        if(task.getDueDate().isBlank() | task.getDueDate() == null) {
+        if(task.getDueDate() == null | task.getDueDate().isBlank()) {
             result.addMessage("must have a due date");
             return result;
         }
@@ -65,6 +65,26 @@ public class TaskService {
         }
         task = repository.create(task);
         result.setTask(task);
+        return result;
+    }
+
+    public TaskResult update(Task task) throws DataAccessException {
+        TaskResult result = validate(task);
+        if(!result.isSuccess()) {
+            return result;
+        }
+        boolean updated = repository.update(task);
+        if(!updated) {
+            result.addMessage(String.format("Task with id: %s does not exist", task.getId()));
+        }
+        return result;
+    }
+
+    public TaskResult deleteByid(int taskId) throws DataAccessException {
+        TaskResult result = new TaskResult();
+        if(!repository.delete(taskId)) {
+            result.addMessage(String.format("Task with id: %s does not exist", taskId));
+        }
         return result;
     }
 
