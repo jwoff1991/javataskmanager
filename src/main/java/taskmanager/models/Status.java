@@ -5,6 +5,10 @@ public enum Status {
     IN_PROGRESS("In progress"),
     COMPLETE("Complete");
 
+    public String getDisplayText() {
+        return displayText;
+    }
+
     Status(String displayText) {
         this.displayText = displayText;
     }
