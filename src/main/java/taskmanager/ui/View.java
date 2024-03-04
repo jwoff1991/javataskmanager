@@ -1,6 +1,7 @@
 package taskmanager.ui;
 
 import taskmanager.models.Status;
+import taskmanager.models.Task;
 
 import java.io.Console;
 import java.util.List;
@@ -10,7 +11,42 @@ public class View {
     Scanner console = new Scanner(System.in);
 
     public int getMenuOption() {
+        displayHeader("Welcome to the main menu");
+        displayText("1. Add a task");
+        displayText("2. View all tasks");
+        displayText("3. Update a task");
+        displayText("4. Delete a task");
+        displayText("5. Exit the program");
+        return readInt("What would you like to do? [1-5]", 1, 5);
+    }
 
+    public Task makeTask() {
+        Task result = new Task();
+        result.setCreatedOn(readString("Enter the date: "));
+        result.setTitle(readString("Enter the title: "));
+        result.setDescription(readString("Enter the description: "));
+        result.setDueDate(readString("Enter due date: "));
+        result.setStatus(readStatus("Enter the status: "));
+        return result;
+
+    }
+
+    public void displayTasks(List<Task> tasks) {
+        for(Task task : tasks) {
+            displayText(String.format("id: %s, Date: %s, Title: %s, Description: %s, Due date: %s, Status: %s%n",
+                    task.getId(),
+                    task.getCreatedOn(),
+                    task.getTitle(),
+                    task.getDescription(),
+                    task.getDueDate(),
+                    task.getStatus()));
+        }
+    }
+
+    public int updateById() {
+        displayText("Which is would you like to update?");
+        int id = readInt("Enter the id: ", 1, 9999999);
+        return id;
     }
 
 
