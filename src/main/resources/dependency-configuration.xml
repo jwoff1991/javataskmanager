@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define beans here. -->
+    <bean id="repository" class="taskmanager.data.TaskFIleRepository">
+        <constructor-arg value="./data/tasks.csv" />
+    </bean>
+    <bean id="service" class="taskmanager.domain.TaskService">
+        <constructor-arg ref="repository" />
+    </bean>
+
+    <bean id="view" class="taskmanager.ui.View">
+
+    </bean>
+    <bean id="controller" class="taskmanager.ui.Controller">
+        <constructor-arg ref="view" />
+        <constructor-arg ref="service" />
+    </bean>
+
+</beans>
