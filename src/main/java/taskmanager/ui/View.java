@@ -1,12 +1,13 @@
 package taskmanager.ui;
 
+import org.springframework.stereotype.Component;
 import taskmanager.models.Status;
 import taskmanager.models.Task;
 
 import java.io.Console;
 import java.util.List;
 import java.util.Scanner;
-
+@Component
 public class View {
     Scanner console = new Scanner(System.in);
 

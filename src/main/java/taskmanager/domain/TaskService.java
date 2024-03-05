@@ -1,11 +1,12 @@
 package taskmanager.domain;
 
+import org.springframework.stereotype.Service;
 import taskmanager.data.DataAccessException;
 import taskmanager.data.TaskRepository;
 import taskmanager.models.Task;
 
 import java.util.List;
-
+@Service
 public class TaskService {
     public TaskService(TaskRepository repository) {
         this.repository = repository;
